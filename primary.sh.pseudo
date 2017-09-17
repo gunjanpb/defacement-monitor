@@ -1,0 +1,12 @@
+if [file md5sums exists]; then
+	what to do what to do wanting wanting
+	#TODO:graceful restart is keyword
+else
+	generate md5sums #first time run, this should happen
+fi
+#Execution of secondary started
+connect to secondary
+while [ infinity ]; do
+	send md5sums
+	wait(t)
+done

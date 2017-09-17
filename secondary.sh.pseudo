@@ -1,0 +1,20 @@
+start listening on a port for incoming primary.sh connection requests
+receive md5sums and save it as md5sums.new
+#this is a rule: immediately send md5sums as soon as connection is established.
+while [ infinity ]; do
+	if [ file md5sums exists ]; then
+		if [ md5sums.new == md5sums ]; then
+			ALL OK
+		else
+			change detected, alert_sysadmin()
+	else
+		mv md5sums.new md5sums # first time execution
+	fi
+	wait(t)
+	if [ connection closed AndAnd reconnect() fails ]; then
+		alert_sysadmin()
+	# Note that above if block ran reconnect function, so primary should now send another md5sums
+	else if [not receive(md5sums.new)]; then
+		alert_sysadmin()
+	fi
+done
