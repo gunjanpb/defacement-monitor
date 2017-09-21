@@ -13,11 +13,12 @@ except socket.error as err:
 	print "socket creation failed with error %s" %(err)
 	return
 except socket.gaierror:
-	print "there was an error resolving the host"
 	print "There was an error resolving the host"
 	return
-
-salt = sock.recv(BUF)
-#Use salt during hashing
-sums = subprocess.check_output('find -type f -exec md5sum '{}' \;'.split(), shell=True)
-sock.send(sums)	#md5sums sent
+while True:
+	salt = sock.recv(BUF)
+	#Use salt during hashing
+	sums = subprocess.check_output('find -type f -exec md5sum '{}' \;'.split(), shell=True)
+	sock.send(sums)	#md5sums sent
+	if cl broken:
+		break
