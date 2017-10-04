@@ -1,11 +1,18 @@
-if [file md5sums exists]; then
-	what to do what to do wanting wanting
+if [ -s md5sums ]; then #file md5sums exists and not empty
+	#this script was restarted, recalculate md5sums
+	recalc=1;
 	#TODO:graceful restart is keyword
 else
-	generate md5sums #first time run, this should happen
+	recalc=0; #generate md5sums #first time run, this should happen
 fi
 #Execution of secondary started
-connect to secondary
+connect to secondary #use ncat for socket programming: https://stackoverflow.com/questions/4739196/simple-socket-server-in-bash
+receive salt
+calculate md5(file+salt) for all files
+#TODO: use SHA instead of md5.
+#TODO: non-blocking wait
+#TODO: one or both should be cronned instead of using wait builtin
+#TODO: ncat probably does not offer any security, discuss if this is a problem (filenames over internet in plaintext?)
 while [ infinity ]; do
 	send md5sums
 	wait(t)
