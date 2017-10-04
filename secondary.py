@@ -5,8 +5,12 @@ import os
 import subprocess
 import filecmp
 import time
+import random
+import string
 
-period = 5	#in seconds
+BUF = 1024
+port = 12345 #Change to anything
+period = 15	#in seconds
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind(('', port)) #socket.gethostname()
@@ -31,15 +35,16 @@ sock.listen(1)
 # 		bytes_recd = bytes_recd + len(chunk)
 # 	return ''.join(chunks)
 
-cl, addr = s.accept()
+cl, addr = sock.accept()
 while True:
-	toSend=''.join([random.choice(string.lowercase) for i in range(n)])
+	toSend=''.join([random.choice(string.lowercase) for i in range(5)])
 	cl.send(toSend)	#Send random salt
 	sums_recd = cl.recv(BUF)	#BUF better be big, complete md5sums "file" received
-	if os.path(./md5sums).isfile():
+	print "[{", sums_recd, "]}"
+	if os.path.isfile("./md5sums"):
 		os.rename('md5sums', 'md5sums.old')
 		new_sums = open("md5sums","w")
-		new_sums.writelines(sums_recd.split('\n'))
+		new_sums.writelines([sums_recd])
 		new_sums.close()
 		if not filecmp.cmp("md5sums.old","md5sums"):
 			print "Files modified!!!"
@@ -49,6 +54,6 @@ while True:
 		new_sums.writelines(sums_recd.split('\n'))
 		new_sums.close()
 	time.sleep(period)
-	if cl broken:
-		break
+#	if cl broken:
+#		break
 cl.close()
